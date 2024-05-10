@@ -66,7 +66,7 @@ def delete_recipe(request, id):
 def approve_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    if request.user.get_role != "ADMIN":
+    if request.user.role != "ADMIN":
         return render(request, 'error.html', {'message': 'You are not authorized to approve recipes.'})
 
     recipe.is_approved = True
