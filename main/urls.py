@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete/<int:id>', delete_recipe, name='delete_recipe'),
     path('auth/', include('user_auth.urls', namespace='user_auth')),
     path('favorite/', include('favorite.urls', namespace='favorite')), 
+    path('approve-recipe/<int:recipe_id>/', approve_recipe, name='approve_recipe'),
 ]
