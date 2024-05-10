@@ -9,10 +9,18 @@ class ApproveRecipeTestCase(TestCase):
         self.admin = User.objects.create(username='admin', is_staff=True)
         self.recipe = Recipe.objects.create(title='Gourmet Negroni', is_approved=False)
 
-    def testApproveRecipe(self):
+    def test_approve_recipe(self):
         self.assertFalse(self.recipe.is_approved)
 
-        approve_recipe(self.recipe, self.admin)
+        approve_recipe(self.recipe)
 
         self.recipe.refresh_from_db()
         self.assertTrue(self.recipe.is_approved)
+
+    def test_reject_recipe(self):
+        self.assertFalse(self.recipe.is_approved)
+
+        reject_recipe(self.recipe)
+
+        self.recipe.refresh_from_db()
+        self.assertFalse(self.recipe.is_approved)
