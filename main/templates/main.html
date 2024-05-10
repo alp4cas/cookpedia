@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .bg {
+            height: 100%; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="overlay">
+            <div>
+                <h1>Recipes</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Chef</th>
+                            <th>Description</th>
+                            <th>Ingredients</th>
+                            <th>Directions</th>
+                            <th>Nutrition Facts</th>
+                            <th>Date Added</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recipe in recipes %}
+                            <tr>
+                                <td>{{recipe.name}}</td>
+                                <td>{{recipe.chef}}</td>
+                                <td>{{recipe.description}}</td>
+                                <td>{{recipe.ingredients}}</td>
+                                <td>{{recipe.directions}}</td>
+                                <td>{{recipe.nutrition_facts}}</td>
+                                <td>{{recipe.date_added}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br />
+                <a href="{% url 'create_recipe' %}" class="btn btn-primary">
+                    Add New Recipe
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
