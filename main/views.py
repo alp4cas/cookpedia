@@ -21,3 +21,8 @@ def create_recipe(request):
 
     context = {'form': form}
     return render(request, "create_recipe.html", context)
+
+def delete_recipe(request, id):
+    recipe = Recipe.objects.get(pk=id)
+    recipe.delete()
+    return HttpResponseRedirect(reverse('main:main'))
