@@ -8,3 +8,4 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     directions = models.TextField()
     nutrition_facts = models.TextField()
+    status = models.CharField(max_length=50, default='PENDING')

@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from main.forms import RecipeForm
-from main.models import Recipe
+from .models import Recipe
 
 def home(request):
     return render(request, 'homepage.html')
 
 def main(request):
-    return render(request, 'main.html')
+    recipes = Recipe.objects.all()
+    return render(request, 'main.html', {'recipes': recipes})
 
 def create_recipe(request):  
     if request.method == 'POST':
@@ -25,4 +26,4 @@ def create_recipe(request):
 def delete_recipe(request, id):
     recipe = Recipe.objects.get(pk=id)
     recipe.delete()
-    return HttpResponseRedirect(reverse('main:main'))
+    return HttpResponseRedirect(reverse('main'))

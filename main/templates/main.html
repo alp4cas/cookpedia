@@ -45,6 +45,7 @@
                             <th>Ingredients</th>
                             <th>Directions</th>
                             <th>Nutrition Facts</th>
+                            <th>Status</th>
                             <th>Date Added</th>
                             <th>Action</th>
                         </tr>
@@ -58,9 +59,10 @@
                                 <td>{{recipe.ingredients}}</td>
                                 <td>{{recipe.directions}}</td>
                                 <td>{{recipe.nutrition_facts}}</td>
+                                <td>{{recipe.status}}</td>
                                 <td>{{recipe.date_added}}</td>
                                 <td>
-                                    <a href="{% url 'main:delete_recipe' recipe.pk %}">
+                                    <a href="{% url 'delete_recipe' recipe.pk %}">
                                         <button>
                                             Delete
                                         </button>
