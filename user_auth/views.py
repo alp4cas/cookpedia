@@ -31,9 +31,10 @@ def login_user(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    response = HttpResponseRedirect(reverse("home:home")) 
-                    response.set_cookie('last_login', str(datetime.datetime.now()))
-                    return response
+                    # response = HttpResponseRedirect(reverse('main:main')) 
+                    # response.set_cookie('last_login', str(datetime.datetime.now()))
+                    # return response
+                    return redirect(request.GET.get('next', 'main:home'))
                 else:
                     messages.info(request, 'Sorry, incorrect username or password. Please try again.')
             context = {}

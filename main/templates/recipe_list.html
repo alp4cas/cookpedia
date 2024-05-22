@@ -52,6 +52,7 @@
                     <thead>
                         <tr>
                             <th>Recipe</th>
+                            <th>Chef</th>
                             <th>Description</th>
                             <th>Ingredients</th>
                             <th>Directions</th>
@@ -65,6 +66,7 @@
                         {% for recipe in recipes %}
                             <tr>
                                 <td>{{recipe.name}}</td>
+                                <td>{{recipe.user.username}}</td>
                                 <td>{{recipe.description}}</td>
                                 <td>{{recipe.ingredients}}</td>
                                 <td>{{recipe.directions}}</td>
@@ -72,7 +74,7 @@
                                 <td>{{recipe.status}}</td>
                                 <td>{{recipe.date_added}}</td>
                                 <td>
-                                    <a href="{% url 'delete_recipe' recipe.pk %}">
+                                    <a href="{% url 'main:delete_recipe' recipe.pk %}">
                                         <button>
                                             Delete
                                         </button>
@@ -82,7 +84,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <a href="{% url 'create_recipe' %}" class="btn btn-primary">
+                <a href="{% url 'main:create_recipe' %}" class="btn btn-primary">
                     Add New Recipe
                 </a>
             </div>
