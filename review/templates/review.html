@@ -1,0 +1,22 @@
+<h1>test</h1>
+
+<div class="reviews">
+    <h2>Reviews</h2>
+    {% if reviews.exists %}
+    {% for review in reviews %}
+    <div class="review">
+        <b>by {{ review.user.username }}</b>
+        <p>{{ review.review }}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No reviews yet. Be the first to review!</p>
+    {% endif %}
+</div>
+
+<form action="/review/submit" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="reviewForm" value="{{ recipe.id }}">
+    <textarea name="review" required placeholder="Enter your review here..."></textarea>
+    <button type="submit">Submit Review</button>
+</form>
