@@ -46,7 +46,7 @@
                 console.log("Recipe ID:", recipeId);
 
                 $.ajax({
-                    url: '{% url "add_to_favorite" 0 %}'.replace('0', recipeId),
+                    url: '{% url "favorite:add_to_favorite" 0 %}'.replace('0', recipeId),
                     type: 'GET',
                     success: function (response) {
                         alert(response.message);
