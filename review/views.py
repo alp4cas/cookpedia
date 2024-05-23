@@ -12,7 +12,8 @@ def recipe(request, recipe_id):
     review_list = ReviewItem.objects.filter(recipe=recipe)
     context = {
         'recipe':recipe,
-        'review':review_list
+        'reviews':review_list,
+        'recipe_id': recipe_id
     }
 
     return render(request, "review.html", context)
