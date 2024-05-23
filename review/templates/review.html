@@ -1,22 +1,42 @@
-<h1>test</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="reviews">
-    <h2>Reviews</h2>
-    {% if reviews.exists %}
-    {% for review in reviews %}
-    <div class="review">
-        <b>by {{ review.user.username }}</b>
-        <p>{{ review.review }}</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <link rel="stylesheet" href="{% static 'review.css' %}">
+</head>
+
+<body>
+
+    <div class="reviews-container">
+        <h2 class="review-title">Reviews</h2>
+        <div class="reviews">
+            {% if reviews.exists %}
+            {% for review in reviews %}
+            <div class="review">
+                <h3 class="review-name">{{ review.user.username }}</h3>
+                <p>{{ review.review }}</p>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+            {% endif %}
+        </div>
     </div>
-    {% endfor %}
-    {% else %}
-    <p>No reviews yet. Be the first to review!</p>
-    {% endif %}
-</div>
 
-<form action="/review/submit" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="reviewForm" value="{{ recipe.id }}">
-    <textarea name="review" required placeholder="Enter your review here..."></textarea>
-    <button type="submit">Submit Review</button>
-</form>
+    <h3 class="add-review-title">Add reviews</h3>
+    <div class="review-form">
+        <form action="/review/submit" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="reviewForm" value="{{ recipe.id }}">
+            <textarea name="review" required placeholder="Enter your review here..."></textarea>
+            <button class="d-flex flex-row-reverse" type="submit">Post Review</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
