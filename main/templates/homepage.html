@@ -3,41 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
+    <title>Cookpedia</title>
     <!-- Bootstrap CSS from CDN -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body, html {
-            height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
-        .bg {
-            height: 100%; 
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        .navbar {
+            padding: 0.5rem 1rem;  /* Adjust padding to make navbar more compact */
         }
 
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+        .navbar-brand {
+            font-size: 1.5em;  /* Large text for the Cookpedia logo */
+        }
+
+        .content {
             text-align: center;
+            margin-top: 2rem;
+        }
+
+        .content h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            max-width: 1600px; /* Adjust the maximum width to match the screenshot */
+            margin: auto;
         }
     </style>
 </head>
 <body>
-    <div class="bg">
-        <div class="overlay">
-            <div>
-                <h1>Coming Soon</h1>
-                <p>Cookpedia</p>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cookpedia</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">All Recipes <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Favorites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Collections</a>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="content">
+            <h1>All Recipes</h1>
         </div>
     </div>
 </body>

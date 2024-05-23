@@ -12,30 +12,34 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-
         .bg {
             height: 100%; 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
-
         .overlay {
-            background-color: rgba(0, 0, 0, 0.5);
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: black;
+            padding: 20px;
             text-align: center;
         }
-
         .form-container {
             width: 50%;
             margin: auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: white; /* Changed to pure white for a cleaner look */
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Added a subtle shadow for depth */
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            width: 100%;
         }
     </style>
 </head>
@@ -44,11 +48,9 @@
         <div class="overlay">
             <div class="form-container">
                 <h1>Add New Recipe</h1>
-
                 <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
-
                     <input type="submit" class="btn btn-primary" value="Add Recipe"/>
                 </form>
             </div>
@@ -56,3 +58,4 @@
     </div>
 </body>
 </html>
+
