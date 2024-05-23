@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,20 @@
     <!-- Bootstrap CSS from CDN -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
         .navbar {
-            padding: 0.5rem 1rem;  /* Adjust padding to make navbar more compact */
+            padding: 0.5rem 1rem;
+            /* Adjust padding to make navbar more compact */
         }
 
         .navbar-brand {
-            font-size: 1.5em;  /* Large text for the Cookpedia logo */
+            font-size: 1.5em;
+            /* Large text for the Cookpedia logo */
         }
 
         .content {
@@ -31,16 +35,19 @@
         }
 
         .container {
-            max-width: 1600px; /* Adjust the maximum width to match the screenshot */
+            max-width: 1600px;
+            /* Adjust the maximum width to match the screenshot */
             margin: auto;
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">Cookpedia</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -52,7 +59,7 @@
                         <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Favorites</a>
+                        <a class="nav-link" href="{% url 'favorite:favorite_view' %}">Favorites</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Collections</a>
@@ -67,4 +74,5 @@
         </div>
     </div>
 </body>
+
 </html>
