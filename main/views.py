@@ -12,7 +12,8 @@ def home(request):
 
 @login_required(login_url='user_auth:login')
 def recipe_list(request):
-    recipes = Recipe.objects.all()
+    # recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(user=request.user)
     return render(request, 'recipe_list.html', {'recipes': recipes})
 
 def create_recipe(request):  
