@@ -6,11 +6,13 @@
     <title>Add New Recipe</title>
     <!-- Bootstrap CSS from CDN -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Inter Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body, html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         .bg {
             height: 100%; 
@@ -23,23 +25,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: black;
+            color: #2C2B2B;
             padding: 20px;
-            text-align: center;
+            text-align: left;
         }
         .form-container {
             width: 50%;
             margin: auto;
             padding: 20px;
-            background-color: white; /* Changed to pure white for a cleaner look */
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Added a subtle shadow for depth */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Inter';
         }
         h1 {
             margin-bottom: 20px;
+            font-family: 'Playfair Display';
+            font-weight: 700;
         }
         form {
             width: 100%;
+        }
+        .custom-button {
+            display: flex;
+            width: 137px;
+            padding: 10px 20px;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-radius: 37px;
+            background: #FABA08;
+            border: none;
+            color: var(--light-text-color, #FFF);
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px;
+            letter-spacing: 0.2px;
+        }
+        .custom-button:focus {
+            outline: none;
         }
     </style>
 </head>
@@ -50,12 +77,30 @@
                 <h1>Add New Recipe</h1>
                 <form method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" class="btn btn-primary" value="Add Recipe"/>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Recipe Name</label>
+                        <input type="text" class="form-control" id="recipeName" name="name" placeholder="Recipe Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="recipeDescription" name="description" rows="3" placeholder="Description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ingredients" class="form-label">Ingredients</label>
+                        <textarea class="form-control" id="recipeIngredients" name="ingredients" rows="3" placeholder="Ingredients"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="directions" class="form-label">Directions</label>
+                        <textarea class="form-control" id="recipeDirections" name="directions" rows="3" placeholder="Directions"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nutrition_facts" class="form-label">Nutrition Facts</label>
+                        <textarea class="form-control" id="nutritionFacts" name="nutrition_facts" rows="3" placeholder="Nutrition Facts"></textarea>
+                    </div>
+                    <input type="submit" class="custom-button" value="Add Recipe"/>
                 </form>
             </div>
         </div>
     </div>
 </body>
 </html>
-

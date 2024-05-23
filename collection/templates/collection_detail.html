@@ -1,0 +1,14 @@
+{% block content %}
+  <h1>{{ collection.name }}</h1>
+  <p>{{ collection.description }}</p>
+
+  <h3>Recipes in this Collection:</h3>
+  <ul>
+    {% for recipe in collection.recipes.all %}
+      <li>{{ recipe.name }}</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Add links to edit or delete the collection -->
+  <a href="{% url 'collection:update_collection' collection_id=collection.id %}">Edit Collection</a>
+{% endblock %}
