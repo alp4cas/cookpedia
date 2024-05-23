@@ -35,7 +35,9 @@
     <main>
         <div class="title-container">
             <h2>All Recipes</h2>
-            
+            {% if request.user.role == "admin" %}
+                <h3>Manage Recipes</h3>
+            {% endif %}
             <div class="line"></div>
             {% if user.is_superuser %}
                 <a href="{% url 'main:manage_recipe' %}">
@@ -43,7 +45,7 @@
                 </a>
             {% endif %}
         </div>
-        <div id="recipe-grid" class="recipe-grid"></div>
+        <div class="recipe-grid"></div>
     </main>
     <footer>
     </footer>
