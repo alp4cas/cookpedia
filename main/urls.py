@@ -7,5 +7,6 @@ urlpatterns = [
     path('recipe-list', recipe_list, name='recipe_list'),
     path('create-recipe', create_recipe, name='create_recipe'), 
     path('delete/<int:id>', delete_recipe, name='delete_recipe'),
-    path('auth/', include('user_auth.urls', namespace='user_auth')), 
+    path('auth/', include('user_auth.urls', namespace='user_auth')),
+    path('favorite/', include('favorite.urls', namespace='favorite')), 
 ]

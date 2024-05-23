@@ -44,6 +44,7 @@ p {
     margin-top: 5px;
 }
 
+
 .input-container {
     background: #f0f0f0;
     padding: 5px;
@@ -68,7 +69,20 @@ textarea:focus {
     outline: none;
 }
 
-button {
+.fav-button {
+    background: #FFC107;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.review-button {
     background: #FFC107;
     color: white;
     border: none;
