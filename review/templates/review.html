@@ -17,8 +17,16 @@
             {% if reviews.exists %}
             {% for review in reviews %}
             <div class="review">
-                <h3 class="review-name">{{ review.user.username }}</h3>
-                <p>{{ review.review }}</p>
+                <div>
+                    <h3 class="review-name">{{ review.user.username }}</h3>
+                    <p>{{ review.review }}</p>
+                </div>
+                {% if review.user == request.user %}
+                <div>
+                    <a style="text-decoration: none; color: red; font-size: 30px;"
+                        href="{% url 'delete_review' review.id %}" onclick="return confirm('Are you sure?');">⨂</a>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
             {% else %}

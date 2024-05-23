@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 @login_required(login_url='/auth/login')
 def recipe(request, recipe_id):
@@ -26,3 +27,11 @@ def review(request):
             recipe = Recipe.objects.filter(pk=recipe_id)
             ReviewItem.objects.get_or_create(user=request.user, recipe=recipe[0], review=request.POST['review'])
     return HttpResponseRedirect(reverse('recipe_view', kwargs={'recipe_id': recipe_id})+"#reviewElement")
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(ReviewItem, id=review_id, user=request.user) 
+    recipe_id = review.recipe.id
+    review.delete()
+    return HttpResponseRedirect(reverse('recipe_view', kwargs={'recipe_id': recipe_id})+"#reviewElement")
+
