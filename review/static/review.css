@@ -38,6 +38,11 @@ body {
 
 .review {
     border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 p {
