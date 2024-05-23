@@ -22,4 +22,5 @@ urlpatterns = [
     path('',include('main.urls')),
     path('auth/',include('user_auth.urls')),
     path('review/',include('review.urls')),
+    path('favorite/',include('favorite.urls')),
 ]
