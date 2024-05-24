@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookpedia</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.css' rel='stylesheet'>
 </head>
 
@@ -19,7 +19,7 @@
             <div class="navbar">
                 <a href="{% url 'main:home' %}">All Recipes</a>
                 <a href="{% url 'main:recipe_list' %}">Create Recipe</a>
-                <a href="#">Favorites</a>
+                <a href="{% url 'favorite:favorite_view' %}">Favorites</a>
                 <a href="#">Collections</a>
             </div>
         </div>
@@ -27,31 +27,52 @@
             <i class='bx bx-search'></i>
         </div>
         <div class="header-item">
-            <a href="{% url 'user_auth:logout' %}">
-                <i class='bx bx-log-in'></i>
-            </a>
+            <i class='bx bx-log-in'></i>
         </div>
     </header>
     <main>
         <div class="title-container">
             <h2>All Recipes</h2>
-            
-            <div class="line"></div>
             {% if user.is_superuser %}
-                <a href="{% url 'main:manage_recipe' %}">
-                    Approve Recipes
-                </a>
+            <a href="#">
+                <h3>Manage Recipes</h3>
+            </a>
             {% endif %}
+            <div class="line"></div>
         </div>
         <div id="recipe-grid" class="recipe-grid"></div>
     </main>
     <footer>
     </footer>
-<script>
-    async function getRecipes() {
-        const response = await fetch("{% url 'main:get_recipe' 'APPROVED' %}");
-        return response.json();
-    }
+    <script>
+        async function getRecipes() {
+            const response = await fetch("{% url 'main:show_recipe' %}");
+            return response.json();
+        }
+
+        async function refreshRecipes() {
+            document.getElementById("recipe-grid").innerHTML = "";
+            const recipes = await getRecipes();
+
+            let htmlString = recipes.map((item) => {
+                return `
+                <div class="recipe-tile">
+                    <p>${item.fields.chef}</p>
+                    <div class="recipe">
+                        <h2>${item.fields.name}</h2>
+                        <p>${item.fields.description}</p>
+                        <a href="/review/${item.pk}">View Details</a>
+                    </div>
+                </div>
+            `;
+            }).join("");
+
+            document.getElementById("recipe-grid").innerHTML = htmlString;
+        }
+
+        refreshRecipes();
+    </script>
+</body>
 
     async function refreshRecipes() {
         document.getElementById("recipe-grid").innerHTML = "";
