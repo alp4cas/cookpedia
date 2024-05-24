@@ -10,7 +10,7 @@ class Recipe(models.Model):
     directions = models.TextField()
     nutrition_facts = models.TextField()
     status = models.CharField(max_length=50, default='PENDING')
-    
+
 class User(models.Model):
     username = models.TextField(null=True, blank=True)
     password = models.TextField(null=True, blank=True)
