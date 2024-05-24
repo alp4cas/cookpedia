@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookpedia</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.css' rel='stylesheet'>
+</head>
+
+<body>
+    <header>
+        <div class="header-item">
+            <h1>Cookpedia</h1>
+        </div>
+        <div class="header-item">
+            <div class="navbar">
+                <a href="{% url 'main:home' %}">All Recipes</a>
+                <a href="{% url 'main:create_recipe' %}">Create Recipe</a>
+                <a href="#">Favorites</a>
+                <a href="#">Collections</a>
+            </div>
+        </div>
+        <div class="header-item">
+            <i class='bx bx-search'></i>
+        </div>
+        <div class="header-item">
+            <a href="{% url 'user_auth:logout' %}">
+                <i class='bx bx-log-in'></i>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="title-container">
+            <h2>Approve Recipe</h2>
+            
+            <div class="line"></div>
+                <a href="{% url 'main:manage_recipe' %}">
+                    Back
+                </a>
+        </div>
+        <div id="recipe-container" class="recipe-container"></div>
+    </main>
+    <footer>
+    </footer>
+<script>
+    async function getRecipe() {
+        const response = await fetch("{% url 'main:get_recipe' 'PENDING' %}");
+        return response.json();
+    }
+
+    async function refreshRecipes() {
+        document.getElementById("recipe-container").innerHTML = "";
+        const recipe = await getRecipe();
+
+        let htmlString = recipe.map((item) => {
+            return `
+                <div class="recipe-tile">
+                    <p>${recipe.fields.chef}</p>
+                    <div class="recipe">
+                        <h2>${recipe.fields.name}</h2>
+                        <p>${recipe.fields.description}</p>
+                        <a href="#">View Details</a>
+                    </div>
+                </div>
+            `;
+        }).join("");
+        
+        document.getElementById("recipe-grid").innerHTML = htmlString;
+    }
+
+    refreshRecipes();
+</script>
+</body>
+</html>

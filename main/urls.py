@@ -13,5 +13,4 @@ urlpatterns = [
     path('set-recipe-status/<int:recipe_id>/<str:status>/', set_recipe_status, name='set_recipe_status'),
     path('recipes/<str:param>', get_recipe, name='get_recipe'),
     path('verify-user/<int:user_id>/', verify_user, name='verify_user'),
-    path('json/', show_recipe, name='show_recipe'),
 ]
