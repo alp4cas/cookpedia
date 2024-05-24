@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookpedia</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.css' rel='stylesheet'>
 </head>
 
@@ -19,59 +19,63 @@
             <div class="navbar">
                 <a href="{% url 'main:home' %}">All Recipes</a>
                 <a href="{% url 'main:recipe_list' %}">Create Recipe</a>
-                <a href="{% url 'favorite:favorite_view' %}">Favorites</a>
+                <a href="#">Favorites</a>
                 <a href="#">Collections</a>
             </div>
         </div>
         <div class="header-item">
             <i class='bx bx-search'></i>
         </div>
+        {% if user.is_superuser %}
+            <div class="header-item">
+                <a href="{% url 'main:get_user' %}">
+                    <i class='bx bx-user-check'></i>
+                </a>
+            </div>
+        {% endif %}
         <div class="header-item">
-            <i class='bx bx-log-in'></i>
+            <a href="{% url 'user_auth:logout' %}">
+                <i class='bx bx-log-in'></i>
+            </a>
         </div>
     </header>
     <main>
         <div class="title-container">
-            <h2>All Recipes</h2>
+            <h2>All Users</h2>
             <div class="line"></div>
-            {% if user.is_superuser %}
-            <a href="{% url 'main:manage_recipe' %}">
-                <h3>Manage Recipes</h3>
-            </a>
-            {% endif %}
         </div>
         <div id="recipe-grid" class="recipe-grid"></div>
     </main>
     <footer>
     </footer>
 <script>
-    async function getRecipes() {
-        const response = await fetch("{% url 'main:get_recipe' 'APPROVED' %}");
+    async function getUsers() {
+        const response = await fetch("{% url 'main:get_user' %}");
         return response.json();
     }
 
-    async function refreshRecipes() {
+    async function refreshUsers() {
         document.getElementById("recipe-grid").innerHTML = "";
-        const recipes = await getRecipes();
+        const users = await getUsers();
 
-        let htmlString = recipes.map((item) => {
+        let htmlString = users.map((item) => {
+            const userId = item.pk;  // Accessing the primary key (pk) of the user
             return `
                 <div class="recipe-tile">
-                    <p>${item.fields.user}</p>
                     <div class="recipe">
-                        <h2>${item.fields.name}</h2>
-                        <p>${item.fields.description}</p>
-                        <a href="/review/${item.pk}">View Details</a>
+                        <h2>${item.fields.username}</h2>
+                        <a href="{% url 'main:verify_user' 0 'VERIFIED' %}" onclick="return confirm('Are you sure?');">Verify</a>
+                        <a href="{% url 'main:verify_user' 0 'UNVERIFIED' %}" onclick="return confirm('Are you sure?');">Unverify</a>
                     </div>
                 </div>
-            `;
+            `.replace(/0/g, userId);  // Replacing placeholder 0 with the actual user ID
         }).join("");
         
+        console.log(htmlString);
         document.getElementById("recipe-grid").innerHTML = htmlString;
     }
 
-    refreshRecipes();
+    refreshUsers();
 </script>
-</body>
 </body>
 </html>

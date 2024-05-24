@@ -18,15 +18,13 @@ body {
 }
 
 header {
-    /* margin-top: 2%;
-    margin-bottom: 5%; */
-    height: 140px;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    height: 10vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    margin: 20px 0px 50px 0px !important;
-    padding: 0px 0px 0px 0px !important;
 }
 
 .navbar a {
@@ -43,7 +41,7 @@ main {
 }
 
 .line {
-    margin: 5px 0;
+    margin-top: 5px;
     height: 1px;
     width: 95%;
     background-color: gray;
@@ -62,22 +60,11 @@ main {
     width: 250px;
     height: 200px;
     border-radius: 10px;
-    padding: 30px;
+    padding: 10px;
     display: flex;
-    flex-direction: column;
-}
+    justify-content: space-evenly;
+    align-items: center;
 
-.recipe {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.recipe p {
-    word-wrap: break-word;
-    max-height: calc(1.2em * 3);
-    overflow: hidden;
 }
 
 footer {
@@ -86,8 +73,4 @@ footer {
     margin-top: auto;
     background-color: #E8E8E8;
     padding: 100px 10%;
-  
-.remove-favorite {
-    display: flex;
-    justify-content: flex-end;
 }

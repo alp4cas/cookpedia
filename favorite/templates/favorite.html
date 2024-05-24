@@ -1,57 +1,207 @@
 {% extends 'navbar.html' %}
-
-{% load static %}
-
+<!DOCTYPE html>
+<html lang="en">
 {% block content %}
-<main>
-    <div class="title-container">
-        <h2>Favorites</h2>
-        <div class="line"></div>
-    </div>
-    <div id="favorites-grid" class="recipe-grid">
-        {% for recipe in favorite_recipes %}
-        <div class="recipe-tile">
-            <p>{{ review.user.username }}</p>
-            <div class="recipe">
-                <h2>{{ recipe.name }}</h2>
-                <p>{{ recipe.description }}</p>
+<style>
+    body,
+    html {
+        height: 100%;
+        margin: 0 0 50px 0;
+        font-family: 'Playfair Display', serif;
+        background-color: #ffffff;
+    }
 
-                <a href="#" class="remove-favorite" data-id="{{ recipe.id }}"
-                    style="text-decoration: none; color: red; font-size: 30px;">⨂</a>
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centers content horizontally */
+        width: 100%;
+        /* Takes full width to center within */
+    }
+
+    .content h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display';
+        font-weight: 800;
+        color: #2C2B2B;
+        text-align: left;
+        margin-top: 5rem;
+    }
+
+    .line {
+        display: flex;
+        width: 1110px;
+        height: 1px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        background: #E8E8E8;
+        margin: 0 auto 50px;
+
+    }
+
+    .title-container {
+        width: 95%;
+        margin: auto;
+    }
+
+    .recipe-grid {
+        margin: 10px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-gap: 20px;
+        justify-items: center;
+    }
+
+    .recipe-tile {
+        background-color: #FABA08;
+        width: 250px;
+        height: 200px;
+        border-radius: 10px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .recipe {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .recipe p {
+        word-wrap: break-word;
+        max-height: calc(1.2em * 3);
+        overflow: hidden;
+    }
+
+    footer {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: auto;
+        background-color: #E8E8E8;
+        padding: 100px 10%;
+    }
+
+    .remove-favorite {
+        text-align: center;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8);
+    }
+
+    .card {
+        background-color: #f8fafb;
+        border-radius: 25px;
+        padding: 20px;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: larger;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6);
+        max-width: 300px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-cont {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 70px;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .recipe p.description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<body>
+    <main>
+        <div class="content">
+            <div class="container">
+                <h1>Favorites</h1>
             </div>
+            <div class="line"></div>
         </div>
-        {% empty %}
-        <p>No favorites yet. Start adding some!</p>
-        {% endfor %}
-    </div>
-</main>
+        <div id="favorites-grid" class="card-cont">
+            {% for recipe in favorite_recipes %}
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{ review.user.username }}</p>
+                        <div class="recipe">
+                            <b style="font-size: 30px;">{{ recipe.name }}</b>
+                            <p class="description">{{ recipe.description }}</p>
 
-<script>
+                            <div class="button-group">
+                                <a href="{% url 'recipe_view' recipe.id %}" class="btn btn-primary"
+                                    style="background-color: #FFC107; border: none; margin-bottom: 10px; width: 150px;">View
+                                    Details</a>
+                                <a href="#" class="btn btn-primary remove-favorite" data-id=" {{ recipe.id }}"
+                                    style="text-decoration: none; color: white; background-color: red; border: none; width: 150px; ">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No favorites yet. Start adding some!</p>
+            {% endfor %}
+        </div>
+    </main>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const removeButtons = document.querySelectorAll('.remove-favorite');
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const recipeId = this.getAttribute('data-id');
-                fetch(`/favorite/remove/${recipeId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}',
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message === 'Recipe removed from wishlist') {
-                            this.closest('.recipe-tile').remove();  // Corrected class name for DOM removal
-                        }
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove-favorite');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const recipeId = this.getAttribute('data-id').trim();
+                    fetch(`/favorite/remove/${recipeId}/`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json',
+                        },
                     })
-                    .catch(error => console.error('Error:', error));
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === 'Recipe removed from wishlist') {
+                                this.closest('.card').remove();
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
             });
         });
-    });
 
-</script>
+    </script>
+</body>
 
+</html>
 {% endblock content %}

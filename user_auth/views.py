@@ -43,6 +43,6 @@ def login_user(request):
 @csrf_exempt
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('login'))
+    response = HttpResponseRedirect(reverse('user_auth:login'))
     response.delete_cookie('last_login')
     return response

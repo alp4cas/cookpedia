@@ -7,13 +7,15 @@
     <!-- Bootstrap CSS from CDN -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
         .bg {
+
             height: 100%; 
             background-position: center;
             background-repeat: no-repeat;
@@ -51,22 +53,22 @@
                     </thead>
                     <tbody>
                         {% for recipe in recipes %}
-                            <tr>
-                                <td>{{recipe.name}}</td>
-                                <td>{{recipe.chef}}</td>
-                                <td>{{recipe.description}}</td>
-                                <td>{{recipe.ingredients}}</td>
-                                <td>{{recipe.directions}}</td>
-                                <td>{{recipe.nutrition_facts}}</td>
-                                <td>{{recipe.date_added}}</td>
-                                <td>
-                                    <a href="{% url 'main:delete_recipe' recipe.pk %}">
-                                        <button>
-                                            Delete
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>{{recipe.name}}</td>
+                            <td>{{recipe.chef}}</td>
+                            <td>{{recipe.description}}</td>
+                            <td>{{recipe.ingredients}}</td>
+                            <td>{{recipe.directions}}</td>
+                            <td>{{recipe.nutrition_facts}}</td>
+                            <td>{{recipe.date_added}}</td>
+                            <td>
+                                <a href="{% url 'main:delete_recipe' recipe.pk %}">
+                                    <button>
+                                        Delete
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
