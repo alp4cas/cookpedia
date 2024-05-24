@@ -2,7 +2,7 @@ body {
     font-family: Playfair Display, inter;
     background: #f9f9f9;
     margin: 0;
-    padding: 80px;
+    padding: 90px;
 }
 
 .review-title {
@@ -12,6 +12,7 @@ body {
     font-style: normal;
     font-weight: 700;
     margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .add-review-title {
@@ -33,7 +34,8 @@ body {
 }
 
 .review-name {
-    margin-bottom: 0;
+    margin-bottom: 5px;
+    font-size: 20px;
 }
 
 .review {
@@ -121,38 +123,46 @@ button:hover {
     font-weight: 800;
     margin-bottom: 5px;
 }
+
 .recipe-user {
-    color: #000;
+    color: #666;
     text-align: left;
     font-size: 24px;
     font-weight: 300;
     font-family: 'Inter', sans-serif;
     margin-top: 0px;
 }
+
 .recipe-description {
     color: #2C2B2B;
     font-size: 16px;
     font-weight: 300;
-    width: 1110px;
+    width: auto;
     font-family: 'Inter', sans-serif;
+    margin-bottom: 20px;
 }
+
 .section-title {
     color: #2C2B2B;
     text-align: left;
     font-size: 24px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
 }
+
 .section-content {
     color: #2C2B2B;
     font-size: 16px;
     font-weight: 300;
     font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    margin-bottom: 20px;
 }
+
 .user-divider {
-    width: 1350px;
-    height: 8px; 
+    width: auto;
+    height: 8px;
     background: #FFBA08;
     margin: 10px auto 20px;
     justify-content: center;
@@ -163,11 +173,30 @@ button:hover {
 
 .section-divider {
     display: flex;
-    width: 1350px;
+    width: auto;
     height: 1px;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
     background: #E8E8E8;
     margin: 0 auto 10px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 7px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: rgb(65, 64, 64);
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+    background-color: rgb(88, 87, 87);
+    color: white;
 }
