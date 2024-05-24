@@ -1,79 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'navbar.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookpedia</title>
-    <!-- Bootstrap CSS from CDN -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body,
-        html {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+{% load static %}
 
-        .navbar {
-            padding: 0.5rem 1rem;
-            /* Adjust padding to make navbar more compact */
-        }
+{% block content %}
+<main>
+    <div class="title-container">
+        <h2>Favorites</h2>
+        <div class="line"></div>
+    </div>
+    <div id="favorites-grid" class="recipe-grid">
+        {% for recipe in favorite_recipes %}
+        <div class="recipe-tile">
+            <p>{{ review.user.username }}</p>
+            <div class="recipe">
+                <h2>{{ recipe.name }}</h2>
+                <p>{{ recipe.description }}</p>
 
-        .navbar-brand {
-            font-size: 1.5em;
-            /* Large text for the Cookpedia logo */
-        }
-
-        .content {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .content h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5rem;
-        }
-
-        .container {
-            max-width: 1600px;
-            /* Adjust the maximum width to match the screenshot */
-            margin: auto;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Cookpedia</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:home' %}">All Recipes <span
-                                class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'favorite:favorite_view' %}">Favorites</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
-                    </li>
-                </ul>
+                <a href="#" class="remove-favorite" data-id="{{ recipe.id }}"
+                    style="text-decoration: none; color: red; font-size: 30px;">⨂</a>
             </div>
         </div>
-    </nav>
-    <div class="container">
-        <div class="content">
-            <h1>Favorites</h1>
-        </div>
+        {% empty %}
+        <p>No favorites yet. Start adding some!</p>
+        {% endfor %}
     </div>
-</body>
+</main>
 
-</html>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const removeButtons = document.querySelectorAll('.remove-favorite');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const recipeId = this.getAttribute('data-id');
+                fetch(`/favorite/remove/${recipeId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === 'Recipe removed from wishlist') {
+                            this.closest('.recipe-tile').remove();  // Corrected class name for DOM removal
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+
+</script>
+
+{% endblock content %}
