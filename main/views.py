@@ -14,6 +14,13 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'homepage.html')
 
+def manage_recipe(request):
+    return render(request, 'manage_recipe.html')
+
+def get_recipe(request, param):
+    data = Recipe.objects.filter(status=param)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
 def recipe_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'recipe_list.html', {'recipes': recipes})
@@ -46,8 +53,8 @@ def delete_recipe(request, id):
 def set_recipe_status(request, recipe_id, status):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    user.is_verified = True
-    user.save()
+    recipe.status = status
+    recipe.save()
     return redirect('main:manage_recipe')
 
 def show_recipe(request):
