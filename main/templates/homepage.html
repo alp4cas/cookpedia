@@ -27,12 +27,12 @@
             <i class='bx bx-search'></i>
         </div>
         {% if user.is_superuser %}
-            <a href="{% url 'main:manage_user' %}">
-                <div class="header-item">
-                    <i class='bx bx-user-check'></i>
-                </div>
-            </a>
-            {% endif %}
+        <a href="{% url 'main:manage_user' %}">
+            <div class="header-item">
+                <i class='bx bx-user-check'></i>
+            </div>
+        </a>
+        {% endif %}
         <div class="header-item">
             <i class='bx bx-log-in'></i>
         </div>
@@ -51,18 +51,18 @@
     </main>
     <footer>
     </footer>
-<script>
-    async function getRecipes() {
-        const response = await fetch("{% url 'main:get_recipe' 'APPROVED' %}");
-        return response.json();
-    }
+    <script>
+        async function getRecipes() {
+            const response = await fetch("{% url 'main:get_recipe' 'APPROVED' %}");
+            return response.json();
+        }
 
-    async function refreshRecipes() {
-        document.getElementById("recipe-grid").innerHTML = "";
-        const recipes = await getRecipes();
+        async function refreshRecipes() {
+            document.getElementById("recipe-grid").innerHTML = "";
+            const recipes = await getRecipes();
 
-        let htmlString = recipes.map((item) => {
-            return `
+            let htmlString = recipes.map((item) => {
+                return `
                 <div class="recipe-tile">
                     <p>${item.fields.user}</p>
                     <div class="recipe">
@@ -72,13 +72,14 @@
                     </div>
                 </div>
             `;
-        }).join("");
-        
-        document.getElementById("recipe-grid").innerHTML = htmlString;
-    }
+            }).join("");
 
-    refreshRecipes();
-</script>
+            document.getElementById("recipe-grid").innerHTML = htmlString;
+        }
+
+        refreshRecipes();
+    </script>
 </body>
 </body>
+
 </html>
