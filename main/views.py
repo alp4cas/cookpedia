@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core import serializers
 from django.urls import reverse
 from main.forms import *
 from .models import *
@@ -10,9 +11,16 @@ from django.shortcuts import get_object_or_404, redirect, render
 @login_required(login_url='user_auth:login')
 def home(request):
     return render(request, 'homepage.html')
+
+def manage_recipe(request):
+    return render(request, 'manage_recipe.html')
     
 def main(request):
     return render(request, 'main.html')
+
+def get_recipe(request, param):
+    data = Recipe.objects.filter(status=param)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @login_required(login_url='user_auth:login')
 def recipe_list(request):
