@@ -33,6 +33,7 @@
 
         .content {
             text-align: left;
+            align-items: left; 
         }
 
         .content h1 {
@@ -66,33 +67,17 @@
             margin-top: 50px; 
         }
         .custom-button {
-            display: flex;
-            width: 180px;
             padding: 10px 20px;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            border-radius: 5px;
-            border: 1px solid #FFBA08;
-            background-color: #ffffff;
-            color: #FFBA08;
-            text-decoration: none;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
+            background: #FABA08;
+            border: none;
+            color: white;
             font-size: 14px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 24px; 
-            letter-spacing: 0.1px;
+            font-weight: 600;
+            border-radius: 37px;
+            text-align: center;
+            cursor: pointer;
         }
-        .custom-button:hover,
-        .custom-button:focus,
-        .custom-button:active {
-            color: #FFBA08;
-            text-decoration: none;
-            outline: none;
-            border-color: #FFBA08;
-        }
+        
         .btn-danger {
             background-color: #FFBA08;
             border-color: #FFBA08;
@@ -105,8 +90,10 @@
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
-            background-color: #000;
+            background: #E8E8E8;
+            margin: 0 auto 10px;
         }
+
         .heading-container {
             width: 100%;
             display: flex;
@@ -160,6 +147,7 @@
         <div class="container">
             <h1>Recipe List</h1>
         </div>
+        <div class="line"></div>
     </div>
     <div class="bg">
         <div class="overlay">
@@ -167,7 +155,7 @@
                 <h1 class="heading">Recipe List</h1>
                 <div class="line"></div>
             </div> -->
-            <div class="line"></div>
+            <!-- <div class="line"></div> -->
             <div class="container text-center mt-3">
                 <a href="{% url 'main:create_recipe' %}" class="custom-button">Add New Recipe</a>
             </div>
@@ -210,4 +198,3 @@
     </div>
 </body>
 </html>
-

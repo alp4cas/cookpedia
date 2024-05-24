@@ -10,6 +10,25 @@
 </head>
 
 <body>
+    <h1 class="recipe-title">{{ recipe.name }}</h1>
+    <p class="recipe-user">Recipe by {{ recipe.user.username }}</p>
+    <div class="user-divider"></div>
+    <p class="recipe-description">{{ recipe.description }}</p>
+
+    <h3 class="section-title">Ingredients</h3>
+    <div class="section-divider"></div>
+    <p class="section-content">{{ recipe.ingredients|linebreaksbr }}</p>
+
+    <h3 class="section-title">Directions</h3>
+    <div class="section-divider"></div>
+    <p class="section-content">{{ recipe.directions|linebreaksbr }}</p>
+
+    <h3 class="section-title">Nutrition Facts</h3>
+    <div class="section-divider"></div>
+    <p class="section-content">{{ recipe.nutrition_facts|linebreaksbr }}</p>
+
+    <div class="user-divider"></div>
+
     <button class="fav-button" data-recipeid="{{ recipe_id }}">Add to Favorites</button>
 
     <div class="reviews-container">

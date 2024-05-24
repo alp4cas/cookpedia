@@ -112,3 +112,62 @@ button:hover {
     clear: both;
     display: table;
 }
+
+.recipe-title {
+    color: #2C2B2B;
+    text-align: left;
+    font-family: "Playfair Display";
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+.recipe-user {
+    color: #000;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 300;
+    font-family: 'Inter', sans-serif;
+    margin-top: 0px;
+}
+.recipe-description {
+    color: #2C2B2B;
+    font-size: 16px;
+    font-weight: 300;
+    width: 1110px;
+    font-family: 'Inter', sans-serif;
+}
+.section-title {
+    color: #2C2B2B;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 5px; 
+}
+.section-content {
+    color: #2C2B2B;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Inter', sans-serif;
+}
+.user-divider {
+    width: 1350px;
+    height: 8px; 
+    background: #FFBA08;
+    margin: 10px auto 20px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background: #FFBA08;
+}
+
+.section-divider {
+    display: flex;
+    width: 1350px;
+    height: 1px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background: #E8E8E8;
+    margin: 0 auto 10px;
+}
