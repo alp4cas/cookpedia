@@ -20,12 +20,19 @@
                 <a href="{% url 'main:home' %}">All Recipes</a>
                 <a href="{% url 'main:recipe_list' %}">Create Recipe</a>
                 <a href="{% url 'favorite:favorite_view' %}">Favorites</a>
-                <a href="#">Collections</a>
+                <a href="{% url 'collection:user_collections' %}">Collections</a>
             </div>
         </div>
         <div class="header-item">
             <i class='bx bx-search'></i>
         </div>
+        {% if user.is_superuser %}
+            <a href="{% url 'main:manage_user' %}">
+                <div class="header-item">
+                    <i class='bx bx-user-check'></i>
+                </div>
+            </a>
+            {% endif %}
         <div class="header-item">
             <i class='bx bx-log-in'></i>
         </div>
