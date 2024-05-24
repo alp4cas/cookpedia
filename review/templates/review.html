@@ -16,6 +16,13 @@
     <a href="javascript:history.back()" class="back-button">
         <i class="bi bi-arrow-left"></i> Back
     </a>
+  
+    {% if user.is_superuser %}
+    <a href="{% url 'main:set_recipe_status' recipe.id 'APPROVED' %}" onclick="return confirm('Are you sure?');">Approve</a>
+    <a href="{% url 'main:set_recipe_status' recipe.id 'REJECTED' %}" onclick="return confirm('Are you sure?');">Reject</a>
+    {% endif %}
+
+    
     <h1 class="recipe-title">{{ recipe.name }}</h1>
     <p class="recipe-user">Recipe by {{ recipe.user.username }}</p>
     <div class="user-divider"></div>
@@ -35,9 +42,11 @@
 
     <div class="user-divider"></div>
 
+
     <button class="fav-button" data-recipeid="{{ recipe.id }}">Add to Favorites</button>
     <button class="collection-button" data-recipeid="{{ recipe.id }}" data-bs-toggle="modal"
         data-bs-target="#collectionModal">Add to Collection</button>
+
 
     <div class="reviews-container">
         <h2 class="review-title">Reviews</h2>
@@ -130,6 +139,7 @@
                     }
                 });
             });
+        });
 
             $('#addToCollectionButton').click(function () {
                 var recipeId = $('.collection-button').data('recipeid');
