@@ -16,13 +16,15 @@
     <a href="javascript:history.back()" class="back-button">
         <i class="bi bi-arrow-left"></i> Back
     </a>
-  
+
     {% if user.is_superuser %}
-    <a href="{% url 'main:set_recipe_status' recipe.id 'APPROVED' %}" onclick="return confirm('Are you sure?');">Approve</a>
-    <a href="{% url 'main:set_recipe_status' recipe.id 'REJECTED' %}" onclick="return confirm('Are you sure?');">Reject</a>
+    <a href="{% url 'main:set_recipe_status' recipe.id 'APPROVED' %}"
+        onclick="return confirm('Are you sure?');">Approve</a>
+    <a href="{% url 'main:set_recipe_status' recipe.id 'REJECTED' %}"
+        onclick="return confirm('Are you sure?');">Reject</a>
     {% endif %}
 
-    
+
     <h1 class="recipe-title">{{ recipe.name }}</h1>
     <p class="recipe-user">Recipe by {{ recipe.user.username }}</p>
     <div class="user-divider"></div>
@@ -141,37 +143,36 @@
             });
         });
 
-            $('#addToCollectionButton').click(function () {
-                var recipeId = $('.collection-button').data('recipeid');
-                var selectedCollections = [];
-                $('#collectionForm input[name="collections"]:checked').each(function () {
-                    selectedCollections.push($(this).val());
-                });
-
-                if (selectedCollections.length > 0) {
-                    $.ajax({
-                        url: '{% url "add_to_collection" %}',
-                        type: 'POST',
-                        data: {
-                            'recipe_id': recipeId,
-                            'collections': selectedCollections,
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                        },
-                        success: function (response) {
-                            alert(response.message);
-                            console.log("Success response:", response);
-                            $('#collectionModal').modal('hide');
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Error adding to collections');
-                            console.log("Error Status:", status);
-                            console.log("Error Message:", error);
-                        }
-                    });
-                } else {
-                    alert('Please select at least one collection.');
-                }
+        $('#addToCollectionButton').click(function () {
+            var recipeId = $('.collection-button').data('recipeid');
+            var selectedCollections = [];
+            $('#collectionForm input[name="collections"]:checked').each(function () {
+                selectedCollections.push($(this).val());
             });
+
+            if (selectedCollections.length > 0) {
+                $.ajax({
+                    url: '{% url "add_to_collection" %}',
+                    type: 'POST',
+                    data: {
+                        'recipe_id': recipeId,
+                        'collections': selectedCollections,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        alert(response.message);
+                        console.log("Success response:", response);
+                        $('#collectionModal').modal('hide');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error adding to collections');
+                        console.log("Error Status:", status);
+                        console.log("Error Message:", error);
+                    }
+                });
+            } else {
+                alert('Please select at least one collection.');
+            }
         });
     </script>
 </body>

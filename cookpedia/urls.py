@@ -26,3 +26,4 @@ urlpatterns = [
     path('review/',include('review.urls')),
     path('favorite/',include('favorite.urls')),
     path('collection/',include('collection.urls')),
+]
