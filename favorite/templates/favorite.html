@@ -6,14 +6,18 @@
     body,
     html {
         height: 100%;
-        margin: 0;
+        margin: 0 0 50px 0;
         font-family: 'Playfair Display', serif;
         background-color: #ffffff;
     }
 
     .content {
-        text-align: left;
-        align-items: left;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centers content horizontally */
+        width: 100%;
+        /* Takes full width to center within */
     }
 
     .content h1 {
@@ -40,11 +44,11 @@
 
     .title-container {
         width: 95%;
-        margin: 0 5% 5% 5%;
+        margin: auto;
     }
 
     .recipe-grid {
-        margin: 10px 0 10% 10px;
+        margin: 10px auto;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         grid-gap: 20px;
@@ -83,8 +87,52 @@
     }
 
     .remove-favorite {
+        text-align: center;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8);
+    }
+
+    .card {
+        background-color: #f8fafb;
+        border-radius: 25px;
+        padding: 20px;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: larger;
+        width: 300px;
         display: flex;
-        justify-content: flex-end;
+        flex-direction: column;
+        justify-content: space-around;
+        box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6);
+        max-width: 300px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-cont {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 70px;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .recipe p.description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
     }
 </style>
 
@@ -97,16 +145,25 @@
             </div>
             <div class="line"></div>
         </div>
-        <div id="favorites-grid" class="recipe-grid">
+        <div id="favorites-grid" class="card-cont">
             {% for recipe in favorite_recipes %}
-            <div class="recipe-tile">
-                <p>{{ review.user.username }}</p>
-                <div class="recipe">
-                    <h2>{{ recipe.name }}</h2>
-                    <p>{{ recipe.description }}</p>
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{ review.user.username }}</p>
+                        <div class="recipe">
+                            <b style="font-size: 30px;">{{ recipe.name }}</b>
+                            <p class="description">{{ recipe.description }}</p>
 
-                    <a href="#" class="remove-favorite" data-id="{{ recipe.id }}"
-                        style="text-decoration: none; color: red; font-size: 30px;">⨂</a>
+                            <div class="button-group">
+                                <a href="{% url 'recipe_view' recipe.id %}" class="btn btn-primary"
+                                    style="background-color: #FFC107; border: none; margin-bottom: 10px; width: 150px;">View
+                                    Details</a>
+                                <a href="#" class="btn btn-primary remove-favorite" data-id=" {{ recipe.id }}"
+                                    style="text-decoration: none; color: white; background-color: red; border: none; width: 150px; ">Delete</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% empty %}
@@ -122,7 +179,7 @@
             removeButtons.forEach(button => {
                 button.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const recipeId = this.getAttribute('data-id');
+                    const recipeId = this.getAttribute('data-id').trim();
                     fetch(`/favorite/remove/${recipeId}/`, {
                         method: 'DELETE',
                         headers: {
@@ -133,7 +190,9 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.message === 'Recipe removed from wishlist') {
-                                this.closest('.recipe-tile').remove();  // Corrected class name for DOM removal
+                                this.closest('.card').remove();
+                            } else {
+                                alert(data.message);
                             }
                         })
                         .catch(error => console.error('Error:', error));
