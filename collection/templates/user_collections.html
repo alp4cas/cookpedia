@@ -1,0 +1,322 @@
+{% extends 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    body {
+        font-family: 'Playfair Display', serif;
+        margin-top: 90px;
+    }
+
+    .centered-heading {
+        text-align: center;
+    }
+
+    .delete-form {
+        display: inline;
+    }
+
+    .styled-button {
+        display: inline-flex;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #FFBA08;
+        color: #FFBA08;
+        text-decoration: none;
+        font-family: 'Playfair Display', serif;
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .styled-button:hover,
+    .styled-button:active {
+        background-color: #FFBA08;
+        color: #fff;
+    }
+
+    .styled-button:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .card {
+        background-color: #f8fafb;
+        border-radius: 25px;
+        padding: 20px;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: larger;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8);
+    }
+
+    .card-title {
+        font-size: xx-large;
+        font-weight: 550;
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+        margin: 0 auto;
+        display: inline-block;
+    }
+
+    .card-description {
+        font-size: small;
+        color: #555;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .btn-custom {
+        background-color: #FFBA08;
+        border-radius: 5px;
+        padding: 9px;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: small;
+        color: #fff;
+        border: none;
+        display: inline-block;
+        text-decoration: none;
+        margin-right: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover,
+    .btn-custom:active {
+        background-color: #d99a07;
+        color: #fff;
+    }
+
+    .btn-custom:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .footer {
+        background-color: #333;
+        color: #ffffff;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .no-collections-message {
+        font-size: 50px;
+        color: #FFBA08;
+        text-align: center;
+        margin-top: 20%;
+        font-family: 'Playfair Display';
+        overflow: hidden;
+        border-right: .15em solid #FFBA08;
+        white-space: nowrap;
+        margin: 0 auto;
+        letter-spacing: .15em;
+        animation:
+            typing 3.5s steps(40, end),
+            blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0
+        }
+
+        to {
+            width: 100%
+        }
+    }
+
+    @keyframes blink-caret {
+
+        from,
+        to {
+            border-color: transparent
+        }
+
+        50% {
+            border-color: #FFBA08
+        }
+    }
+</style>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 centered-heading">Your Collections</h1>
+        <div class="d-flex justify-content-center">
+            <a href="#" class="styled-button" data-bs-toggle="modal" data-bs-target="#exampleModal">New Collection +</a>
+        </div>
+        <div class="row" id="collections">
+            {% if collections %}
+            {% for collection in collections %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ collection.name }}</h5>
+                        <p class="card-description">{{ collection.description }}</p>
+                        <p class="card-text">{{ collection.recipes.count }} Recipes</p>
+                        <a href="{% url 'collection:collection_detail' collection_id=collection.id %}"
+                            class="btn-custom">View</a>
+                        <a href="{% url 'collection:update_collection' collection_id=collection.id %}"
+                            class="btn-custom">Edit</a>
+                        <form action="{% url 'collection:delete_collection' collection_id=collection.id %}"
+                            method="post" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure you want to delete this collection?');">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-12">
+                <p class="no-collections-message">Oops, no collections yet!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Collection</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="col-form-label">Recipes:</label>
+                            <div class="form-check">
+                                {% for recipe in recipes %}
+                                <div>
+                                    <input class="form-check-input" type="checkbox" id="recipe_{{ recipe.id }}"
+                                        name="recipes[]" value="{{ recipe.id }}">
+                                    <label class="form-check-label" for="recipe_{{ recipe.id }}">{{ recipe.name
+                                        }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add
+                        Collection</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getCollections() {
+            return fetch("{% url 'collection:get_collection_json' %}").then((res) => res.json());
+        }
+
+        async function refreshCollections() {
+            document.getElementById("collections").innerHTML = "";
+            const collections = await getCollections();
+            let htmlString = "";
+            collections.forEach((item) => {
+                htmlString += `
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.fields.name}</h5>
+                        <p class="card-description">${item.fields.description}</p>
+                        <p class="card-text">${item.fields.recipes.length} Recipes</p>
+                        <a href="${urlTemplate('collection:collection_detail', item.pk)}" class="btn-custom">View</a>
+                        <a href="${urlTemplate('collection:update_collection', item.pk)}" class="btn-custom">Edit</a>
+                        <form action="${urlTemplate('collection:delete_collection', item.pk)}" method="post" class="delete-form">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${getCookie('csrftoken')}">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this collection?');">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>`;
+            });
+            document.getElementById("collections").innerHTML = htmlString;
+        }
+
+        function urlTemplate(name, pk) {
+            const urls = {
+                'collection:collection_detail': '{% url "collection:collection_detail" 0 %}',
+                'collection:update_collection': '{% url "collection:update_collection" 0 %}',
+                'collection:delete_collection': '{% url "collection:delete_collection" 0 %}'
+            };
+            return urls[name].replace('0', pk);
+        }
+
+        refreshCollections();
+
+        function addCollection() {
+            var form = document.getElementById("form");
+            var formData = new FormData(form);
+
+            formData.set('recipes', []); // Clear the recipes field
+
+            fetch("{% url 'collection:add_collection_ajax' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token is included
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'created') {
+                        alert("Collection created successfully!");
+                        refreshCollections();
+                    } else {
+                        alert("Error creating collection");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+            form.reset(); // Reset form after submission
+            $('#exampleModal').modal('hide'); // Hide modal if using Bootstrap's modal
+            return false; // Prevent form from submitting traditionally
+        }
+
+        document.getElementById("button_add").onclick = addCollection;
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+</body>
+
+</html>
+{% endblock content %}

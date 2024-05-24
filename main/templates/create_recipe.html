@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Recipe</title>
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .bg {
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .overlay {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2C2B2B;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .form-container {
+            width: 75%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .custom-button {
+            padding: 10px 20px;
+            background: #FABA08;
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 37px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <div class="overlay">
+            <div class="form-container">
+                <h1>Add New Recipe</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Recipe Name</label>
+                        <input type="text" class="form-control" id="recipeName" name="name" placeholder="Recipe Name"
+                            value="{{ form.name.value|default_if_none:'' }}">
+                        {% if form.name.errors %}
+                        <div class="error">{{ form.name.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="recipeDescription" name="description" rows="3"
+                            placeholder="Description">{{ form.description.value|default_if_none:'' }}</textarea>
+                        {% if form.description.errors %}
+                        <div class="error">{{ form.description.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="ingredients" class="form-label">Ingredients</label>
+                        <textarea class="form-control" id="recipeIngredients" name="ingredients" rows="3"
+                            placeholder="Ingredients">{{ form.ingredients.value|default_if_none:'' }}</textarea>
+                        {% if form.ingredients.errors %}
+                        <div class="error">{{ form.ingredients.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="directions" class="form-label">Directions</label>
+                        <textarea class="form-control" id="recipeDirections" name="directions" rows="3"
+                            placeholder="Directions">{{ form.directions.value|default_if_none:'' }}</textarea>
+                        {% if form.directions.errors %}
+                        <div class="error">{{ form.directions.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="nutrition_facts" class="form-label">Nutrition Facts</label>
+                        <textarea class="form-control" id="nutritionFacts" name="nutrition_facts" rows="3"
+                            placeholder="Nutrition Facts">{{ form.nutrition_facts.value|default_if_none:'' }}</textarea>
+                        {% if form.nutrition_facts.errors %}
+                        <div class="error">{{ form.nutrition_facts.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+                    <input type="submit" class="custom-button" value="Add Recipe" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

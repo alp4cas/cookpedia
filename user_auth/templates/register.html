@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <title>Register</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            display: flex;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 900px;
+        }
+
+        .register-brand {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-right: 40px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .register-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #2C2B2B;
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            align-items: flex-start;
+        }
+
+        .create-acc {
+            color: #A6A6A6;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            align-items: flex-start;
+        }
+
+        h1,
+        p {
+            text-align: left;
+        }
+
+        form {
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #FFA500;
+            color: white;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e69500;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            color: #A6A6A6;
+            /* Gray color for the text */
+            text-align: center;
+            /* Centers the text */
+            font-family: 'Inter', sans-serif;
+            /* Sets Inter as the font */
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%;
+        }
+
+        .login-link a {
+            color: #FABA08;
+            /* Golden color for 'Register Now' link */
+            font-family: 'Inter', sans-serif;
+            /* Ensures the link also uses Inter */
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .form-error {
+            color: red;
+            /* Sets the color of error messages to red */
+            margin-top: 5px;
+            /* Adds a small space above the error message */
+            font-size: 14px;
+            /* Slightly smaller text for error messages */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <div class="register-brand">
+            <h1>Cookpedia</h1>
+        </div>
+        <div class="register-form">
+            <p class="register">Register</p>
+            <p class="create-acc">Create an account</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <button type="submit">Register</button>
+            </form>
+            <p class="login-link">Already have an account? <a href="{% url 'user_auth:login' %}">Login here</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

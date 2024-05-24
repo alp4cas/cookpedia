@@ -1,0 +1,160 @@
+{% extends 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block content %}
+<style>
+    body,
+    html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+    }
+
+    .bg {
+        height: 100%;
+        background-color: #ffffff;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .overlay {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #2C2B2B;
+        padding: 20px;
+    }
+
+    .content {
+        text-align: left;
+        align-items: left;
+    }
+
+    .content h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display';
+        font-weight: 800;
+        color: #2C2B2B;
+        text-align: left;
+        margin-top: 5rem;
+    }
+
+    .table-container {
+        margin-top: 50px;
+    }
+
+    .custom-button {
+        padding: 10px 20px;
+        background: #FABA08;
+        border: none;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 37px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        background-color: #FFBA08;
+        border-color: #FFBA08;
+        color: white;
+    }
+
+    .line {
+        display: flex;
+        width: 1110px;
+        height: 1px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        background: #E8E8E8;
+        margin: 0 auto 10px;
+    }
+
+    .heading-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0 15px;
+        align-items: flex-start;
+    }
+
+    .heading {
+        color: #000;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5em;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        margin-bottom: 20px;
+        margin-top: 4rem;
+        text-align: left;
+        justify-content: left;
+        align-items: left;
+    }
+</style>
+
+<body>
+    <div class="content">
+        <div class="container">
+            <h1>Recipe List</h1>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="bg">
+        <div class="overlay">
+            <!-- <div class="heading-container">
+                <h1 class="heading">Recipe List</h1>
+                <div class="line"></div>
+            </div> -->
+            <!-- <div class="line"></div> -->
+            <div class="container text-center mt-3">
+                <a href="{% url 'main:create_recipe' %}" class="custom-button">Add New Recipe</a>
+            </div>
+            <div class="table-container container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Recipe</th>
+                            <th>Description</th>
+                            <th>Ingredients</th>
+                            <th>Directions</th>
+                            <th>Nutrition Facts</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recipe in recipes %}
+                        <tr>
+                            <td>{{recipe.name}}</td>
+                            <td>{{recipe.description}}</td>
+                            <td>{{recipe.ingredients}}</td>
+                            <td>{{recipe.directions}}</td>
+                            <td>{{recipe.nutrition_facts}}</td>
+                            <td>{{recipe.status}}</td>
+                            <td>
+                                <a href="{% url 'main:delete_recipe' recipe.pk %}">
+                                    <button type="button" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br />
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock content %}
