@@ -11,10 +11,18 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
 from main.models import Recipe
+from django.core.exceptions import PermissionDenied
+
+@login_required(login_url="user_auth:login")
+def remove_recipe(request, collection_id, recipe_id):
+    collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    collection.recipes.remove(recipe)
+    return redirect('collection:collection_detail', collection_id=collection_id)
 
 @login_required(login_url="user_auth:login")
 def user_collections(request):
-    collections = Collection.objects.filter(user=request.user)  # Retrieve collections for the logged-in user
+    collections = Collection.objects.filter(user=request.user) 
     recipes = Recipe.objects.all()
     return render(request, 'user_collections.html', {'collections': collections, 'recipes': recipes})
 
@@ -23,7 +31,7 @@ def create_or_update_collection(request, collection_id=None):
     if collection_id:
         collection = get_object_or_404(Collection, id=collection_id)
         if request.user != collection.user:
-            raise PermissionDenied  # Prevent editing someone else's collection
+            raise PermissionDenied 
     else:
         collection = None
 
@@ -54,8 +62,7 @@ def create_or_update_collection(request, collection_id=None):
 def collection_detail(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
     if request.user != collection.user:
-        raise PermissionDenied  # Ensures only the owner can view the collection details
-
+        raise PermissionDenied 
     return render(request, 'collection_detail.html', {'collection': collection})
 
 @login_required(login_url="user_auth:login")
@@ -82,12 +89,11 @@ def add_collection_ajax(request):
     if request.method == 'POST':
         name = request.POST.get("name")
         description = request.POST.get("description")
-        recipes = request.POST.getlist("recipes[]")  # Note the change to get a list of recipe IDs
+        recipes = request.POST.getlist("recipes[]") 
         user = request.user
         new_collection = Collection.objects.create(name=name, description=description, user=user)
-        new_collection.recipes.set(recipes)  # Assuming 'recipes' is a list of recipe IDs
+        new_collection.recipes.set(recipes) 
         new_collection.save()
         return JsonResponse({'status': 'created'}, status=201)
 
     return HttpResponseNotFound()
-

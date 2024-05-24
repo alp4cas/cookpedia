@@ -171,7 +171,7 @@
                         <a class="nav-link" href="#">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
+                        <a class="nav-link" href="{% url 'collection:user_collections' %}">Collections</a>
                     </li>
                 </ul>
             </div>
@@ -225,17 +225,6 @@
                         <div class="mb-3">
                             <label for="description" class="col-form-label">Description:</label>
                             <textarea class="form-control" id="description" name="description"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Recipes:</label>
-                            <div class="form-check">
-                                {% for recipe in recipes %}
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="recipe_{{ recipe.id }}" name="recipes[]" value="{{ recipe.id }}">
-                                    <label class="form-check-label" for="recipe_{{ recipe.id }}">{{ recipe.name }}</label>
-                                </div>
-                                {% endfor %}
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -292,12 +281,7 @@
             var form = document.getElementById("form");
             var formData = new FormData(form);
 
-            var checkedRecipes = [];
-            form.querySelectorAll('input[name="recipes[]"]:checked').forEach((checkbox) => {
-                checkedRecipes.push(checkbox.value);
-            });
-
-            formData.set('recipes', checkedRecipes); // Set the checked recipes in formData
+            formData.set('recipes', []); // Clear the recipes field
 
             fetch("{% url 'collection:add_collection_ajax' %}", {
                 method: "POST",
