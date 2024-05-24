@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5w4fmrt_6hld@j5r_ctbvgs#0gmg1#d80e8#qzk*0v#hjdq!#%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"] 
+ALLOWED_HOSTS = ["cookpedia-production.up.railway.app/"] 
 
 LOGIN_URL = 'user_auth:login'
 
@@ -132,4 +132,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'user_auth:login' 
-LOGIN_REDIRECT_URL = 'main:home'
+# LOGIN_REDIRECT_URL = 'main:home'
+
+CSRF_TRUSTED_ORIGINS = ['https://cookpedia-production.up.railway.app']
