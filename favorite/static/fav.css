@@ -20,7 +20,7 @@ body {
 header {
     /* margin-top: 2%;
     margin-bottom: 5%; */
-    height: 140px;
+    height: 40px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -43,7 +43,7 @@ main {
 }
 
 .line {
-    margin: 5px 0;
+    margin-top: 5px;
     height: 1px;
     width: 95%;
     background-color: gray;
@@ -86,7 +86,8 @@ footer {
     margin-top: auto;
     background-color: #E8E8E8;
     padding: 100px 10%;
-  
+}
+
 .remove-favorite {
     display: flex;
     justify-content: flex-end;

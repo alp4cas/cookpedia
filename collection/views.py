@@ -5,11 +5,18 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.core import serializers
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseNotFound
+from main.models import Recipe
 
 @login_required(login_url="user_auth:login")
 def user_collections(request):
     collections = Collection.objects.filter(user=request.user)  # Retrieve collections for the logged-in user
-    return render(request, 'user_collections.html', {'collections': collections})
+    recipes = Recipe.objects.all()
+    return render(request, 'user_collections.html', {'collections': collections, 'recipes': recipes})
 
 @login_required(login_url="user_auth:login")
 def create_or_update_collection(request, collection_id=None):
@@ -31,7 +38,17 @@ def create_or_update_collection(request, collection_id=None):
     else:
         form = CollectionForm(instance=collection)
 
-    return render(request, 'create_or_update_collection.html', {'form': form, 'collection': collection})
+    recipes = Recipe.objects.all()
+    collection_recipes = collection.recipes.all() if collection else []
+
+    return render(request, 'create_or_update_collection.html', {
+        'form': form,
+        'collection': collection,
+        'recipes': recipes,
+        'collection_recipes': collection_recipes
+    })
+
+
 
 @login_required(login_url="user_auth:login")
 def collection_detail(request, collection_id):
@@ -51,3 +68,26 @@ def delete_collection(request, collection_id):
 
     collection.delete()
     return redirect('collection:user_collections')
+
+def get_collection_json(request):
+    collection_item = Collection.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', collection_item))
+
+def get_recipes_json(request):
+    recipe_item = Recipe.objects.all()
+    return HttpResponse(serializers.serialize('json', recipe_item))
+
+@csrf_exempt
+def add_collection_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        recipes = request.POST.getlist("recipes[]")  # Note the change to get a list of recipe IDs
+        user = request.user
+        new_collection = Collection.objects.create(name=name, description=description, user=user)
+        new_collection.recipes.set(recipes)  # Assuming 'recipes' is a list of recipe IDs
+        new_collection.save()
+        return JsonResponse({'status': 'created'}, status=201)
+
+    return HttpResponseNotFound()
+
