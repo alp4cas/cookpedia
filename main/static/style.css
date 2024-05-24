@@ -27,7 +27,6 @@ header {
     width: 100%;
     margin: 20px 0px 50px 0px !important;
     padding: 0px 0px 0px 0px !important;
-
 }
 
 .navbar a {
@@ -44,7 +43,7 @@ main {
 }
 
 .line {
-    margin-top: 5px;
+    margin: 5px 0;
     height: 1px;
     width: 95%;
     background-color: gray;
@@ -87,8 +86,7 @@ footer {
     margin-top: auto;
     background-color: #E8E8E8;
     padding: 100px 10%;
-}
-
+  
 .remove-favorite {
     display: flex;
     justify-content: flex-end;
