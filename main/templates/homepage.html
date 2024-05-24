@@ -8,45 +8,63 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body, html {
+            height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
-        .navbar {
-            padding: 0.5rem 1rem;  /* Adjust padding to make navbar more compact */
+        .bg {
+            height: 100%; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
+        .navbar {
+            padding: 0.5rem 1rem;  
+            background-color: white;
+        }
         .navbar-brand {
-            font-size: 1.5em;  /* Large text for the Cookpedia logo */
+            font-size: 1.5em; 
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            color: #2C2B2B;
+        }
+        .navbar-nav .nav-link {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: #2C2B2B;
+        }
+        .navbar-nav .nav-item:not(:last-child) {
+            margin-right: 2rem; 
         }
 
         .content {
-            text-align: center;
-            margin-top: 2rem;
+            text-align: left;
         }
 
         .content h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5rem;
-        }
-
-        .container {
-            max-width: 1600px; /* Adjust the maximum width to match the screenshot */
-            margin: auto;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            color: #2C2B2B;
+            text-align: left;
+            margin-top: 5rem;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-white">
+        <div class="container justify-content-center">
             <a class="navbar-brand" href="#">Cookpedia</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">All Recipes <span class="sr-only">(current)</span></a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'main:home' %}">All Recipes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
@@ -61,8 +79,8 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="content">
+    <div class="content">
+        <div class="container">
             <h1>All Recipes</h1>
         </div>
     </div>
