@@ -17,7 +17,7 @@
         </div>
         <div class="header-item">
             <div class="navbar">
-                <a href="#">All Recipes</a>
+                <a href="{% url 'main:home' %}">All Recipes</a>
                 <a href="{% url 'main:create_recipe' %}">Create Recipe</a>
                 <a href="#">Favorites</a>
                 <a href="#">Collections</a>
@@ -33,14 +33,14 @@
     <main>
         <div class="title-container">
             <h2>All Recipes</h2>
-            {% if request.user.role == "admin" %}
-                <h3>Manage Recipes</h3>
+            {% if user.is_superuser %}
+                <a href="#">
+                    <h3>Manage Recipes</h3>
+                </a>
             {% endif %}
             <div class="line"></div>
         </div>
-        <div id="recipe-grid" class="recipe-grid">
-            
-        </div>
+        <div id="recipe-grid" class="recipe-grid"></div>
     </main>
     <footer>
     </footer>

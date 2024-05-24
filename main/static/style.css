@@ -73,8 +73,8 @@ main {
 }
 
 .recipe p {
-    word-wrap: break-word; /* Or use overflow-wrap: break-word; */
-    max-height: calc(1.2em * 3); /* 3 lines * line height */
+    word-wrap: break-word;
+    max-height: calc(1.2em * 3);
     overflow: hidden;
 }
 
