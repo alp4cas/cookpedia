@@ -9,7 +9,6 @@ from main.forms import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='user_auth:login')
 def home(request):
     return render(request, 'homepage.html')
 
@@ -30,6 +29,10 @@ def create_recipe(request):
             recipe.user = request.user
             form.save()
             return HttpResponseRedirect(reverse('main:recipe_list'))  
+        else:
+            # If the form is not valid, re-render the page with the form containing error messages
+            context = {'form': form}
+            return render(request, "create_recipe.html", context)
     else:
         form = RecipeForm()
 
