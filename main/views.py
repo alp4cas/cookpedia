@@ -7,7 +7,7 @@ from django.core import serializers
 from django.urls import reverse
 from main.forms import *
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='auth/login')
@@ -16,6 +16,14 @@ def home(request):
 
 def manage_recipe(request):
     return render(request, 'manage_recipe.html')
+
+def manage_user(request):
+    return render(request, 'verify_user.html')
+
+def get_user(request):
+    User = get_user_model()
+    data = User.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def get_recipe(request, param):
     data = Recipe.objects.filter(status=param)
@@ -61,13 +69,11 @@ def show_recipe(request):
     data = Recipe.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def verify_user(request, user_id):
+def verify_user(request, user_id, status):
+    User = get_user_model()
     user = get_object_or_404(User, pk=user_id)
 
-    if request.user.role != "ADMIN":
-        return render(request, 'error.html', {'message': 'You are not authorized to approve recipes.'})
-
-    user.is_verified = True
+    user.status = status
     user.save()
 
-    return redirect('main:user_list')
+    return redirect('main:manage_user')
