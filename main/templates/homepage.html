@@ -44,35 +44,11 @@
     </main>
     <footer>
     </footer>
-    <script>
-        async function getRecipes() {
-            const response = await fetch("{% url 'main:show_recipe' %}");
-            return response.json();
-        }
-
-        async function refreshRecipes() {
-            document.getElementById("recipe-grid").innerHTML = "";
-            const recipes = await getRecipes();
-
-            let htmlString = recipes.map((item) => {
-                return `
-                <div class="recipe-tile">
-                    <p>${item.fields.chef}</p>
-                    <div class="recipe">
-                        <h2>${item.fields.name}</h2>
-                        <p>${item.fields.description}</p>
-                        <a href="/review/${item.pk}">View Details</a>
-                    </div>
-                </div>
-            `;
-            }).join("");
-
-            document.getElementById("recipe-grid").innerHTML = htmlString;
-        }
-
-        refreshRecipes();
-    </script>
-</body>
+<script>
+    async function getRecipes() {
+        const response = await fetch("{% url 'main:get_recipe' 'APPROVED' %}");
+        return response.json();
+    }
 
     async function refreshRecipes() {
         document.getElementById("recipe-grid").innerHTML = "";
@@ -96,5 +72,6 @@
 
     refreshRecipes();
 </script>
+</body>
 </body>
 </html>
