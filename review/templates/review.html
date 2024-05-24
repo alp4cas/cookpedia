@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews</title>
+    <title>Cookpedia</title>
     <link rel="stylesheet" href="{% static 'review.css' %}">
 </head>
 
 <body>
+    <button class="fav-button" data-recipeid="{{ recipe_id }}">Add to Favorites</button>
 
     <div class="reviews-container">
         <h2 class="review-title">Reviews</h2>
@@ -17,8 +18,16 @@
             {% if reviews.exists %}
             {% for review in reviews %}
             <div class="review">
-                <h3 class="review-name">{{ review.user.username }}</h3>
-                <p>{{ review.review }}</p>
+                <div>
+                    <h3 class="review-name">{{ review.user.username }}</h3>
+                    <p>{{ review.review }}</p>
+                </div>
+                {% if review.user == request.user %}
+                <div>
+                    <a style="text-decoration: none; color: red; font-size: 30px;"
+                        href="{% url 'delete_review' review.id %}" onclick="return confirm('Are you sure?');">⨂</a>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
             {% else %}
@@ -33,9 +42,37 @@
             {% csrf_token %}
             <input type="hidden" name="reviewForm" value="{{ recipe.id }}">
             <textarea name="review" required placeholder="Enter your review here..."></textarea>
-            <button class="d-flex flex-row-reverse" type="submit">Post Review</button>
+            <button class="d-flex flex-row-reverse review-button" type="submit">Post Review</button>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.fav-button').click(function () {
+                var recipeId = $(this).data('recipeid');
+                console.log("Recipe ID:", recipeId);
+
+                $.ajax({
+                    url: '{% url "favorite:add_to_favorite" 0 %}'.replace('0', recipeId),
+                    type: 'GET',
+                    success: function (response) {
+                        alert(response.message);
+                        console.log("Success response:", response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error adding to favorites');
+                        console.log("Error Status:", status);
+                        console.log("Error Message:", error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    </script>
+
+
 
 </body>
 

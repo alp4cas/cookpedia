@@ -1,88 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookpedia</title>
-    <!-- Bootstrap CSS from CDN -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .bg {
-            height: 100%; 
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        .navbar {
-            padding: 0.5rem 1rem;  
-            background-color: white;
-        }
-        .navbar-brand {
-            font-size: 1.5em; 
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            color: #2C2B2B;
-        }
-        .navbar-nav .nav-link {
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            color: #2C2B2B;
-        }
-        .navbar-nav .nav-item:not(:last-child) {
-            margin-right: 2rem; 
-        }
-
-        .content {
-            text-align: left;
-        }
-
-        .content h1 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            color: #2C2B2B;
-            text-align: left;
-            margin-top: 5rem;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.css' rel='stylesheet'>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top bg-white">
-        <div class="container justify-content-center">
-            <a class="navbar-brand" href="#">Cookpedia</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{% url 'main:home' %}">All Recipes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Favorites</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
-                    </li>
-                </ul>
+    <header>
+        <div class="header-item">
+            <h1>Cookpedia</h1>
+        </div>
+        <div class="header-item">
+            <div class="navbar">
+                <a href="{% url 'main:home' %}">All Recipes</a>
+                <a href="{% url 'main:create_recipe' %}">Create Recipe</a>
+                <a href="#">Favorites</a>
+                <a href="#">Collections</a>
             </div>
         </div>
-    </nav>
-    <div class="content">
-        <div class="container">
-            <h1>All Recipes</h1>
+        <div class="header-item">
+            <i class='bx bx-search'></i>
         </div>
-    </div>
+        <div class="header-item">
+            <i class='bx bx-log-in'></i>
+        </div>
+    </header>
+    <main>
+        <div class="title-container">
+            <h2>All Recipes</h2>
+            {% if user.is_superuser %}
+                <a href="#">
+                    <h3>Manage Recipes</h3>
+                </a>
+            {% endif %}
+            <div class="line"></div>
+        </div>
+        <div id="recipe-grid" class="recipe-grid"></div>
+    </main>
+    <footer>
+    </footer>
+<script>
+    async function getRecipes() {
+        const response = await fetch("{% url 'main:show_recipe' %}");
+        return response.json();
+    }
+
+    async function refreshRecipes() {
+        document.getElementById("recipe-grid").innerHTML = "";
+        const recipes = await getRecipes();
+
+        let htmlString = recipes.map((item) => {
+            return `
+                <div class="recipe-tile">
+                    <p>${item.fields.chef}</p>
+                    <div class="recipe">
+                        <h2>${item.fields.name}</h2>
+                        <p>${item.fields.description}</p>
+                        <a href="#">View Details</a>
+                    </div>
+                </div>
+            `;
+        }).join("");
+        
+        document.getElementById("recipe-grid").innerHTML = htmlString;
+    }
+
+    refreshRecipes();
+</script>
 </body>
 </html>
