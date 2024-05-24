@@ -29,8 +29,10 @@ def get_recipe(request, param):
     data = Recipe.objects.filter(status=param)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+@login_required(login_url='user_auth:login')
 def recipe_list(request):
-    recipes = Recipe.objects.all()
+    # recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(user=request.user)
     return render(request, 'recipe_list.html', {'recipes': recipes})
 
 def show_recipe(request):
