@@ -1,31 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookpedia</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar {
-            padding: 0.5rem 1rem;  
+            padding: 0.5rem 1rem;
             background-color: white;
         }
+
         .navbar-brand {
-            font-size: 1.5em; 
+            font-size: 1.5em;
             font-family: 'Playfair Display', serif;
             font-weight: 800;
             color: #2C2B2B;
         }
+
         .navbar-nav .nav-link {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
             color: #2C2B2B;
         }
+
         .navbar-nav .nav-item:not(:last-child) {
-            margin-right: 2rem; 
+            margin-right: 2rem;
         }
-        
     </style>
 </head>
 <nav class="navbar navbar-expand-lg fixed-top bg-white">
     <div class="container justify-content-center">
         <a class="navbar-brand" href="#">Cookpedia</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
@@ -37,12 +46,18 @@
                     <a class="nav-link" href="{% url 'main:recipe_list' %}">Create Recipe</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Favorites</a>
+                    <a class="nav-link" href="{% url 'favorite:favorite_view' %}">Favorites</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Collections</a>
+                    <a class="nav-link" href="{% url 'favorite:favorite_view' %}">Collections</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+{% block content %}
+{% endblock content %}
+
+
+</html>
