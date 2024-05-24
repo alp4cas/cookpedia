@@ -27,9 +27,12 @@ def add_to_favorite(request, recipe_id):
     else:
         return JsonResponse({'message': 'Authentication required to add to favorites'}, status=401)
 
+
 def remove_from_favorite(request, recipe_id):
     if request.user.is_authenticated:
         recipe = Recipe.objects.get(id=recipe_id)
         FavoriteItem.objects.filter(user=request.user, recipe=recipe).delete()
     return JsonResponse({'message': 'Recipe removed from wishlist'})
+
+
 

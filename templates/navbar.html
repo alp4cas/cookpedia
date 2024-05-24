@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookpedia</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.css' rel='stylesheet'>
+</head>
+
+<body>
+    <header>
+        <div class="header-item">
+            <h1>Cookpedia</h1>
+        </div>
+        <div class="header-item">
+            <div class="navbar">
+                <a href="{% url 'main:home' %}">All Recipes</a>
+                <a href="{% url 'main:create_recipe' %}">Create Recipe</a>
+                <a href="{% url 'favorite:favorite_view' %}">Favorites</a>
+                <a href="#">Collections</a>
+            </div>
+        </div>
+        <div class="header-item">
+            <i class='bx bx-search'></i>
+        </div>
+        <div class="header-item">
+            <i class='bx bx-log-in'></i>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+    <footer>
+    </footer>
+</body>
+
+</html>
