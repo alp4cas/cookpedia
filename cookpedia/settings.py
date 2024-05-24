@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-5w4fmrt_6hld@j5r_ctbvgs#0gmg1#d80e8#qzk*0v#hjdq!#%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["cookpedia-production.up.railway.app/"] 
+ALLOWED_HOSTS = ["cookpedia-production.up.railway.app"]
+
 
 LOGIN_URL = 'user_auth:login'
 
