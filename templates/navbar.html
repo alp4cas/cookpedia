@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookpedia</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
     <style>
         .navbar {
             padding: 0.5rem 1rem;
@@ -50,6 +52,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'favorite:favorite_view' %}">Collections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_auth:logout' %}">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
                 </li>
             </ul>
         </div>
