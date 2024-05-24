@@ -37,12 +37,12 @@
             text-align: left;
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6); /* Yellow shadow */
+            box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6); 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8); /* Yellow shadow */
+            box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8);
         }
         .card-title {
             font-size: 2.5rem;
@@ -70,13 +70,16 @@
             margin: 10px 0;
             position: relative;
             padding-left: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .recipe-item:before {
             content: '•';
             position: absolute;
             left: 0;
-            color: #FFBA08; /* Yellow bullet point */
-            font-size: 2rem; /* Make the bullet point larger */
+            color: #FFBA08; 
+            font-size: 2rem;
             line-height: 1;
         }
         .container {
@@ -100,6 +103,33 @@
         .back-button svg {
             margin-right: 10px;
         }
+        .remove-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .remove-button:hover, .remove-button:focus {
+            background-color: darkred;
+            outline: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: #fff; 
+            text-decoration: none; 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            
+        }
+        
+        .remove-button:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -119,7 +149,10 @@
                 <h3 class="card-description-label">Recipes in this Collection:</h3>
                 <ul class="recipe-list">
                     {% for recipe in collection.recipes.all %}
-                    <li class="recipe-item">{{ recipe.name }}</li>
+                    <li class="recipe-item">
+                        <a href="{% url 'collection:collection_detail' recipe.id %}">{{ recipe.name }}</a>
+                        <a href="{% url 'collection:remove_recipe' collection.id recipe.id %}" class="remove-button">Remove</a>
+                    </li>
                     {% endfor %}
                 </ul>
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import create_or_update_collection,collection_detail,user_collections,delete_collection, get_collection_json, get_recipes_json, add_collection_ajax
+from .views import create_or_update_collection,collection_detail,user_collections,delete_collection, get_collection_json, get_recipes_json, add_collection_ajax,remove_recipe
 
 app_name = 'collection'
 urlpatterns = [
@@ -11,4 +11,6 @@ urlpatterns = [
     path('get_collection_json/', get_collection_json, name='get_collection_json'),
     path('get_recipes_json/', get_recipes_json, name='get_recipes_json'),
     path('add_collection_ajax/', add_collection_ajax, name='add_collection_ajax'),
+    path('remove_recipe/<int:collection_id>/<int:recipe_id>/', remove_recipe, name='remove_recipe'),
+
 ]

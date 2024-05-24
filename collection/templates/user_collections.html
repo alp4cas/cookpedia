@@ -173,7 +173,7 @@
                         <a class="nav-link" href="#">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
+                        <a class="nav-link" href="{% url 'collection:user_collections' %}">Collections</a>
                     </li>
                 </ul>
             </div>
@@ -232,6 +232,8 @@
                             <label for="description" class="col-form-label">Description:</label>
                             <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
+<<<<<<< collection
+=======
                         <div class="mb-3">
                             <label class="col-form-label">Recipes:</label>
                             <div class="form-check">
@@ -245,6 +247,7 @@
                                 {% endfor %}
                             </div>
                         </div>
+>>>>>>> development
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -301,12 +304,7 @@
             var form = document.getElementById("form");
             var formData = new FormData(form);
 
-            var checkedRecipes = [];
-            form.querySelectorAll('input[name="recipes[]"]:checked').forEach((checkbox) => {
-                checkedRecipes.push(checkbox.value);
-            });
-
-            formData.set('recipes', checkedRecipes); // Set the checked recipes in formData
+            formData.set('recipes', []); // Clear the recipes field
 
             fetch("{% url 'collection:add_collection_ajax' %}", {
                 method: "POST",
