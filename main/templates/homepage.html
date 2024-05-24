@@ -18,7 +18,7 @@
         <div class="header-item">
             <div class="navbar">
                 <a href="{% url 'main:home' %}">All Recipes</a>
-                <a href="{% url 'main:create_recipe' %}">Create Recipe</a>
+                <a href="{% url 'main:recipe_list' %}">Create Recipe</a>
                 <a href="#">Favorites</a>
                 <a href="#">Collections</a>
             </div>
@@ -64,7 +64,7 @@
                     <div class="recipe">
                         <h2>${item.fields.name}</h2>
                         <p>${item.fields.description}</p>
-                        <a href="#">View Details</a>
+                        <a href="/review/${item.pk}">View Details</a>
                     </div>
                 </div>
             `;

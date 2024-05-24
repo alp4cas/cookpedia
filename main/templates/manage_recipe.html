@@ -37,11 +37,9 @@
             <h2>Manage Recipes</h2>
             
             <div class="line"></div>
-            {% if user.is_superuser %}
                 <a href="{% url 'main:home' %}">
                     Back
                 </a>
-            {% endif %}
         </div>
         <div id="recipe-grid" class="recipe-grid"></div>
     </main>
@@ -64,7 +62,7 @@
                     <div class="recipe">
                         <h2>${item.fields.name}</h2>
                         <p>${item.fields.description}</p>
-                        <a href="#">View Details</a>
+                        <a href="/review/${item.pk}">View Details</a>
                     </div>
                 </div>
             `;

@@ -48,25 +48,10 @@ def delete_recipe(request, id):
     return HttpResponseRedirect(reverse('main:recipe_list'))
 
 
-def approve_recipe(request, recipe_id):
+def set_recipe_status(request, recipe_id, status):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    if request.user.role != "ADMIN":
-        return render(request, 'error.html', {'message': 'You are not authorized to approve recipes.'})
-
-    recipe.is_approved = True
+    recipe.status = status
     recipe.save()
 
-    return redirect('recipe_list')
-
-def reject_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, pk=recipe_id)
-
-    if request.user.role != "ADMIN":
-        return render(request, 'error.html', {'message': 'You are not authorized to approve recipes.'})
-
-    recipe.is_approved = False
-    recipe.save()
-    # TODO: Make reject form logic.
-
-    return redirect('recipe_list')
+    return redirect('main:manage_recipe')
