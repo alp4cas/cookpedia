@@ -120,12 +120,13 @@
                     type: 'GET',
                     success: function (response) {
                         alert(response.message);
-                        console.log("Success response:", response);
                     },
-                    error: function (xhr, status, error) {
-                        alert('Error adding to favorites');
-                        console.log("Error Status:", status);
-                        console.log("Error Message:", error);
+                    error: function (xhr) {
+                        if (xhr.status === 409) {
+                            alert(xhr.responseJSON.message);
+                        } else {
+                            alert('Error adding to favorites');
+                        }
                     }
                 });
             });
