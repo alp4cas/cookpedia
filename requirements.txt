@@ -4,4 +4,4 @@ whitenoise
 psycopg2-binary
 requests
 urllib3
-MySQLdb
+psycopg2-binary==2.8.6 
