@@ -27,5 +27,5 @@ urlpatterns = [
     path('review/',include('review.urls')),
     path('favorite/',include('favorite.urls')),
     path('collection/',include('collection.urls')),
-    path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+    path(r'^public/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
