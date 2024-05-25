@@ -85,12 +85,12 @@ WSGI_APPLICATION = 'cookpedia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': "railway",
-        'USER': "root",
-        'PASSWORD': "GNpRtHLQfwmYujJcXKvYdBwSijKFbiQK",
-        'HOST': "roundhouse.proxy.rlwy.net",
-        'PORT': "29203"
+        'USER': "postgres",
+        'PASSWORD': "FLbxIPURpvxLqPwJvYGJZwXEnjgLNkVl",
+        'HOST': "viaduct.proxy.rlwy.net",
+        'PORT': "46100"
     }
 }
 
