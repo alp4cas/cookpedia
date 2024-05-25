@@ -43,16 +43,18 @@ def create_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
+
             form.save()
+
             return HttpResponseRedirect(reverse('main:recipe_list'))  
         else:
             # If the form is not valid, re-render the page with the form containing error messages
-            context = {'form': form}
+            context = {'form': form, 'userid': request.user.id}
             return render(request, "create_recipe.html", context)
     else:
         form = RecipeForm()
 
-    context = {'form': form}
+    context = {'form': form, 'userid': request.user.id}
     return render(request, "create_recipe.html", context)
 
 def delete_recipe(request, id):
