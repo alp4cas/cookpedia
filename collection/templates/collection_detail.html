@@ -1,124 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Create/Update Collection</title>
+    <title>Collection Detail</title>
     <style>
         body {
             font-family: 'Playfair Display', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-
         }
-
         .centered-heading {
             text-align: center;
-            font-size: 2.5rem;
-            margin-top: 20px;
-            margin-bottom: 20px;
         }
-
         .styled-button {
-            background-color: #FFBA08;
+            background-color: #FFBA08; 
             border-radius: 5px;
-            border: 2px white;
             padding: 10px 20px;
-            color: #fff;
-            text-decoration: none;
+            color: #fff; 
+            text-decoration: none; 
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             transition: background-color 0.3s ease;
         }
-
-        .styled-button:hover,
-        .styled-button:active {
+        .styled-button:hover, .styled-button:active {
             background-color: #d99a07;
             color: #fff;
         }
-
         .styled-button:focus {
             outline: none;
             box-shadow: none;
         }
-
         .card {
-            background-color: #f8fafb;
+            background-color: #f8fafb; 
             border-radius: 25px;
             padding: 40px;
             text-align: left;
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6);
-            /* Yellow shadow */
+            box-shadow: 0 4px 8px rgba(255, 186, 8, 0.6); 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            /* Adjust the width to be smaller */
-            height: 80%;
-            /* Adjust the height to be smaller */
-            max-width: 1000px;
-            /* Ensure it doesn't get too wide on larger screens */
         }
-
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 16px rgba(255, 186, 8, 0.8);
-            /* Yellow shadow */
         }
-
-        .card-header {
-            background-color: #FFBA08;
-            color: #fff;
-            border-radius: 25px 25px 0 0;
-            padding: 20px;
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: 550;
             text-align: center;
-            font-size: 2rem;
+            margin: 0 auto;
         }
-
-        .card-body {
-            padding: 20px;
+        .card-description-label {
+            font-size: 1.8rem;
+            color: #333;
+            margin-top: 20px;
         }
-
-        .btn-primary {
-            background-color: #FFBA08;
-            border: none;
+        .card-description {
             font-size: 1.5rem;
-        }
-
-        .btn-primary:hover {
-            background-color: #d99a07;
-        }
-
-        .form-group {
+            color: #555;
+            text-align: left;
             margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
         }
-
-        .form-label {
+        .recipe-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .recipe-item {
             font-size: 1.5rem;
-            margin-bottom: 5px;
+            margin: 10px 0;
+            position: relative;
+            padding-left: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .form-control {
-            font-size: 1.2rem;
-            padding: 10px;
-            border-radius: 10px;
-            /* Rounded corners */
-            width: 100%;
+        .recipe-item:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #FFBA08; 
+            font-size: 2rem;
+            line-height: 1;
         }
-
-        #description {
-            height: 150px;
-            /* Larger height for the description box */
+        .container {
+            margin-top: 40px;
         }
-
         .back-button {
             background-color: transparent;
             border: none;
@@ -130,70 +96,72 @@
             margin-bottom: 20px;
             transition: color 0.3s ease;
         }
-
         .back-button:hover {
             color: #d99a07;
             text-decoration: none;
         }
-
         .back-button svg {
             margin-right: 10px;
         }
+        .remove-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .remove-button:hover, .remove-button:focus {
+            background-color: darkred;
+            outline: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: #fff; 
+            text-decoration: none; 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            
+        }
+        
+        .remove-button:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <a href="{% url 'collection:user_collections' %}" class="back-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        class="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z" />
-                    </svg>
-                    Back to Collections
-                </a>
-                <h1 class="centered-heading">{{ collection.name|default:"Create New Collection" }}</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="name" class="form-label">Name:</label>
-                                <input type="text" name="name" class="form-control" id="name"
-                                    value="{{ form.name.value|default_if_none:'' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="form-label">Description:</label>
-                                <textarea name="description" class="form-control"
-                                    id="description">{{ form.description.value|default_if_none:'' }}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Recipes:</label>
-                                {% for recipe in recipes %}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="recipes"
-                                        value="{{ recipe.id }}" id="recipe{{ recipe.id }}" {% if recipe in
-                                        collection.recipes %}checked{% endif %}>
-                                    <label class="form-check-label" for="recipe{{ recipe.id }}">
-                                        {{ recipe.name }}
-                                    </label>
-                                </div>
-                                {% endfor %}
-                            </div>
+    <div class="container mt-4">
+        <a href="{% url 'collection:user_collections' %}" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+            </svg>
+            Back to Collections
+        </a>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ collection.name }}</h1>
+                <p class="card-description-label">Description:</p>
+                <p class="card-description">{{ collection.description }}</p>
 
-                            <div class="text-center">
-                                <button type="submit" class="styled-button">Save Collection</button>
-                            </div>
-                        </form>
-                    </div>
+                <h3 class="card-description-label">Recipes in this Collection:</h3>
+                <ul class="recipe-list">
+                    {% for recipe in collection.recipes.all %}
+                    <li class="recipe-item">
+                        <a href="{% url 'collection:collection_detail' recipe.id %}">{{ recipe.name }}</a>
+                        <a href="{% url 'collection:remove_recipe' collection.id recipe.id %}" class="remove-button">Remove</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Add links to edit the collection -->
+                <div class="text-center mt-4">
+                    <a href="{% url 'collection:update_collection' collection_id=collection.id %}" class="styled-button">Edit Collection</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
